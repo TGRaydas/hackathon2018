@@ -10,7 +10,7 @@ from django.http import HttpResponse
 
 def index(request):
 
-    app = ClarifaiApp(api_key='f0e9f06f4bab4b0f918522fac94b2eb4')
+    app = ClarifaiApp(api_key='ad52e2db6c624f22a1ac20ffc11f05ed')
 
     model = app.models.get('general-v1.3')
     # image = ClImage(url='https://samples.clarifai.com/metro-north.jpg')
@@ -47,10 +47,18 @@ def hashtag_creator(clarifai_response):
     hashtag_dict_list = clarifai_response['outputs'][0]['data']['concepts']
     hashtag_list = list()
     hashtag_string = ''
-
     for i in range(0, len(hashtag_dict_list)):
-        if hashtag_dict_list[i]['name'] != 'no person':
-            hashtag_list.append('#' + hashtag_dict_list[i]['name'])
-            hashtag_string += '#' + hashtag_dict_list[i]['name']
+        key_name = hashtag_dict_list[i]['name']
+        if key_name != 'no person':
+            if key_name.find(' ') != -1:
+                key = key_name.split(' ')
+                key_name = ''
+                for j in range(len(key)):
+                    key_name += key[j]
+                hashtag_list.append('#' + key_name)
+                hashtag_string += '#' + key_name + ' '
+            else:
+                hashtag_list.append('#' + key_name)
+                hashtag_string += '#' + key_name + ' '
 
     return [hashtag_list, hashtag_string]

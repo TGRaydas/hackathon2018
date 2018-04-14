@@ -17,9 +17,15 @@ def index(request):
     ls = []
     image = ClImage(url='https://samples.clarifai.com/metro-north.jpg')
     res = model.predict([image])
+
+    hc_elements = hashtag_creator(res)
+    hashtag_list = hc_elements[0]
+    hashtag_str = hc_elements[1]
+
     print(res)
     context = {
-        'res': res,
+        'hashtag_list': hashtag_list,
+        'hashtag_str': hashtag_str
     }
 
     template = loader.get_template('imageapp/index.html')
@@ -36,3 +42,15 @@ def index(request):
             m.save()
             return HttpResponse('image upload success')
     return HttpResponseForbidden('allowed only via POST')'''
+
+def hashtag_creator(clarifai_response):
+    hashtag_dict_list = clarifai_response['outputs'][0]['data']['concepts']
+    hashtag_list = list()
+    hashtag_string = ''
+
+    for i in range(0, len(hashtag_dict_list)):
+        if hashtag_dict_list[i]['name'] != 'no person':
+            hashtag_list.append('#' + hashtag_dict_list[i]['name'])
+            hashtag_string += '#' + hashtag_dict_list[i]['name']
+
+    return [hashtag_list, hashtag_string]

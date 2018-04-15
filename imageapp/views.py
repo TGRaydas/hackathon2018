@@ -9,12 +9,29 @@ from django.http import HttpResponse
 
 
 def index(request):
-
     app = ClarifaiApp(api_key='bd0ca4ef75ce47b69440287a4ded11dd')
-
     model = app.models.get('general-v1.3')
-    # image = ClImage(url='https://samples.clarifai.com/metro-north.jpg')
-    ls = []
+
+    if request.method == 'POST':
+        im = request.FILES
+
+        image = ClImage(file_obj=im['myfile'])
+        res = model.predict([image])
+
+        hc_elements = hashtag_creator(res)
+        hashtag_list = hc_elements[0]
+        hashtag_str = hc_elements[1]
+
+
+        context = {
+            'hashtag_list': hashtag_list,
+            'hashtag_str': hashtag_str
+        }
+
+        template = loader.get_template('imageapp/index.html')
+
+        return HttpResponse(template.render(context, request))
+
     image = ClImage(url='https://samples.clarifai.com/metro-north.jpg')
     res = model.predict([image])
 

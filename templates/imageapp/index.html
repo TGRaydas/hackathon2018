@@ -32,17 +32,18 @@
                 <div class="col-sm-1">
 
                 </div>
-                <div class="col-sm-3">
+
+                <div class="col-sm-5">
                     {% block content %}
-                      <form method="post" enctype="multipart/form-data">
+                      <div method="post" enctype="multipart/form-data" id="upload_form">
                         {% csrf_token %}
-                        <input type="file" name="myfile">
-                        <button type="submit">Upload</button>
-                      </form>
+                        <label class="btn btn-success">
+                            Upload Photo <input type="file" name="myfile" id="file_upload" value="Go" hidden >
+                        </label>
+                      </div>
 
                       {% if uploaded_file_url %}
                         <img src="{{ uploaded_file_url }}">{{ uploaded_file_url }} />
-
                       {% endif %}
 
                     {% endblock %}
@@ -87,7 +88,7 @@
             app.models.predict(Clarifai.GENERAL_MODEL, url).then(
                 function (response) {
                     // do something with response
-                    parse_json(response, url)
+                    parse_json(response)
                 },
                 function (err) {
                     alert("Image could not be analyzed.")
@@ -101,6 +102,7 @@
               function(response) {
                 // do something with response
                   console.log(response);
+                  parse_json(response);
               },
               function(err) {
                 // there was an error
@@ -113,7 +115,7 @@
             document.getElementById("url").value = '';
         }
 
-        function parse_json(response, url){
+        function parse_json(response){
             var data = "";
             var hashtags = [];
             var relevant_data = response["outputs"][0]["data"]["concepts"];

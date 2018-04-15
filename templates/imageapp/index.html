@@ -83,6 +83,34 @@
                     </div>
                 </div>
 
+                <br>
+
+                <div class="row" align="center">
+                    <div class="col-lg-2">
+
+                    </div>
+                    <div class="col-lg-8">
+                        <p style="font-family: 'Rock Salt'">Or</p>
+                    </div><!-- /.col-lg-6 -->
+
+                    <div class="col-lg-2">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-2">
+
+                    </div>
+                    <div class="col-lg-8">
+                        <button class="btn btn-outline-secondary btn-block" id="take_photo_button"><i class="fas fa-camera"></i> Take a Photo</button>
+                    </div><!-- /.col-lg-6 -->
+
+                    <div class="col-lg-2">
+
+                    </div>
+                </div>
+
 
                 </div>
             </div>
@@ -98,13 +126,18 @@
                     <br>
                     <h3 class="float-left" style="font-size: 32px; vertical-align: top;"><i class="fab fa-instagram"></i> nice_pic</h3>
                     <br>
+                    <video style="height: 0px" autoplay></video><br>
+                    <button hidden class="btn btn-outline-light text-dark btn-sm" id="cheese_button" style="align-items: stretch" ><i class="fab fa-instagram fa-2x"></i></button>
                     <img src="https://instagram-press.com/wp-content/uploads/2017/05/instagram-face-filters.png" style="width: 720px" class="img-thumbnail" id="image_space"><br><br>
                     <button class="btn btn-outline-light text-dark float-right btn-sm" id="copy_button" style="align-items: stretch" > <i class="far fa-copy fa-2x"></i></button>
                     <button class="btn btn-outline-light text-dark float-left btn-sm" id="heart_button" style="align-items: stretch" > <i class="far fa-heart fa-2x"></i></button>
                     <button class="btn btn-outline-light text-dark float-left btn-sm" id="comment_button" style="align-items: stretch" > <i class="far fa-comment fa-2x"></i></button><br><br>
-
                     <textarea class="form-control" id="resultContainer" style="resize: none" rows="5">Your #hashtags await...</textarea><br>
-                    <button class="btn btn-outline-secondary float-right">Share on Facebook <i class="fab fa-facebook"></i></button><br>
+<<<<<<< HEAD
+                    <button hidden id="the_share_button" class="btn btn-outline-secondary float-right">Share on Facebook <i class="fab fa-facebook"></i></button><br>
+=======
+                    <button hidden class="btn btn-outline-secondary float-right" id="share_button">Share on Facebook <i class="fab fa-facebook"></i></button><br>
+>>>>>>> 9f551e55e33f66a5cd0831ad8057ffb1f159f80f
                     <br>
                     <br>
                 </div>
@@ -112,6 +145,8 @@
 
                 </div>
             </div>
+<meta name="description"
+      content="John Smith claims beautiful football ..." />
         <br>
         <br>
         <br>
@@ -119,29 +154,66 @@
         <br>
         </div>
     </div>
+    <div id="fb-root"></div>
     </body>
 
     <script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-latest.js"></script>
     <script>
+
+        const videoElement = document.querySelector('video');
+        const audioSelect = document.querySelector('select#audioSource');
+        const videoSelect = document.querySelector('select#videoSource');
+
+        const constraints = {
+            video: false
+        };
+
+        const video = document.querySelector('video');
+
+        var hdConstraints = {
+            video: {width: {min: 1280}, height: {min: 720}}
+        };
+
+        function handleSuccess(stream) {
+            video.srcObject = stream;
+        }
+
+        function handleError(error) {
+            console.error('Reeeejected!', error);
+        }
+
+        function hasGetUserMedia() {
+            return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+        }
+
+        function get_started() {
+            if (hasGetUserMedia()) {
+                // Good to go!
+            } else {
+                alert('getUserMedia() is not supported by your browser');
+        }
+
+
+}
         function getBase64() {
-           var file = $('#file_upload')[0].files[0];
-           var reader = new FileReader();
-           reader.readAsDataURL(file);
-           reader.onload = function () {
-               var encoded = ((reader.result).toString().split(",")[1]);
-               ClarifaiApp_Uploaded(encoded);
-           };
-           reader.onerror = function (error) {
-             console.log('Error: ', error);
-           };
+            var file = $('#file_upload')[0].files[0];
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                var encoded = ((reader.result).toString().split(",")[1]);
+                ClarifaiApp_Uploaded(encoded);
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
         }
 
         function ClarifaiApp(url) {
-            const app = new Clarifai.App({apiKey: 'bd0ca4ef75ce47b69440287a4ded11dd'});
+            const app = new Clarifai.App({apiKey: 'c0075192603f40fdbc1b0165585bb210'});
             app.models.predict(Clarifai.GENERAL_MODEL, url).then(
                 function (response) {
                     // do something with response
-                    parse_json(response)
+                    parse_json(response);
                 },
                 function (err) {
                     alert("Image could not be analyzed.")
@@ -150,11 +222,10 @@
         }
 
         function ClarifaiApp_Uploaded(base64) {
-            const app = new Clarifai.App({apiKey: 'bd0ca4ef75ce47b69440287a4ded11dd'});
+            const app = new Clarifai.App({apiKey: 'c0075192603f40fdbc1b0165585bb210'});
             app.models.predict(Clarifai.GENERAL_MODEL, {base64: base64}).then(
               function(response) {
                 // do something with response
-                  console.log(response);
                   parse_json(response);
               },
               function(err) {
@@ -163,7 +234,9 @@
               }
             );
         }
-
+        function fbshareCurrentPage(url)
+        {
+            window.open("https://www.facebook.com/sharer/sharer.php?u="+ url +"&t="+document.title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'); return false; }
         function clear_url_input() {
             document.getElementById("url").value = '';
         }
@@ -186,16 +259,90 @@
             $("#resultContainer").val(data);
         }
 
+        function gotDevices(deviceInfos) {
+            for (var i = 0; i !== deviceInfos.length; ++i) {
+                var deviceInfo = deviceInfos[i];
+                var option = document.createElement('option');
+                option.value = deviceInfo.deviceId;
+                if (deviceInfo.kind === 'audioinput') {
+                    option.text = deviceInfo.label ||
+                        'microphone ' + (audioSelect.length + 1);
+                    audioSelect.appendChild(option);
+                } else if (deviceInfo.kind === 'videoinput') {
+                    option.text = deviceInfo.label || 'camera ' +
+                        (videoSelect.length + 1);
+                    videoSelect.appendChild(option);
+                } else {
+                    console.log('Found one other kind of source/device: ', deviceInfo);
+                }
+            }
+        }
 
+        function getStream() {
+            if (window.stream) {
+                window.stream.getTracks().forEach(function (track) {
+                    track.stop();
+                });
+            }
+            var constraints = {
+                audio: {
+                    deviceId: {exact: audioSelect.value}
+                },
+                video: {
+                    deviceId: {exact: videoSelect.value}
+                }
+            };
+            navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleError);
+        }
+
+        function gotStream(stream) {
+            window.stream = stream; // make stream available to console
+            videoElement.srcObject = stream;
+        }
+
+        function handleError(error) {
+            console.error('Error: ', error);
+        }
+
+        function fallback() {
+            video.src = 'fallbackvideo.webm';
+        }
+
+        function success(stream) {
+            video.srcObject = stream;
+        }
 
         $(document).ready(function () {
+            $("#the_share_button").click(function () {
+                fbshareCurrentPage($("#image_space").attr("src"));
+            });
+            get_started();
             $("#upload_url").click(function () {
+                const img = document.querySelector('#image_space');
+                const take_button = document.querySelector('#cheese_button');
+                const share_button = document.querySelector('#share_button');
+                constraints['video'] = false;
+                video.hidden = true;
+                img.hidden = false;
+                take_button.hidden = true;
+                share_button.hidden = false;
                 var url = $("#url").val();
                 ClarifaiApp(url);
                 $("#image_space").attr("src", url);
+                $("#the_share_button").attr("hidden", false);
                 clear_url_input();
             });
+
             $("#file_upload").change(function () {
+                $("#the_share_button").attr("hidden", true);
+                const img = document.querySelector('#image_space');
+                const take_button = document.querySelector('#cheese_button');
+                const share_button = document.querySelector('#share_button');
+                constraints['video'] = false;
+                video.hidden = true;
+                img.hidden = false;
+                take_button.hidden = true;
+                share_button.hidden = true;
                 $('#upload_form').submit();
                 getBase64();
             });
@@ -214,6 +361,47 @@
         function imageIsLoaded(e) {
             $('#image_space').attr('src', e.target.result);
         }
+
+        $("#take_photo_button").click(function () {
+            constraints['video'] = true;
+            video.style['height'] = 'inherit';
+            video.hidden = false;
+            const img = document.querySelector('#image_space');
+            const take_button = document.querySelector('#cheese_button');
+            const share_button = document.querySelector('#share_button');
+            img.hidden = true;
+            take_button.hidden = false;
+            share_button.hidden = true;
+            navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+            navigator.mediaDevices.getUserMedia(hdConstraints, successCallback, errorCallback);
+            navigator.mediaDevices.enumerateDevices().then(gotDevices).then(getStream).catch(handleError);
+
+            audioSelect.onchange = getStream;
+            videoSelect.onchange = getStream;
+
+            if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
+                fallback();
+            } else {
+                navigator.getUserMedia({video: true}, success, fallback);
+        }});
+
+        $("#cheese_button").click(function () {
+            const img = document.querySelector('#image_space');
+            const take_button = document.querySelector('#cheese_button');
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            // Other browsers will fall back to image/png
+            img.src = canvas.toDataURL('image/png');
+            video.hidden = true;
+            navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+            constraints['video'] = false;
+            img.hidden = false;
+            take_button.hidden = true;
+            var encoded = ((canvas.toDataURL('image/png')).toString().split(",")[1]);
+            ClarifaiApp_Uploaded(encoded);
+        });
 
         $("#copy_button").click(function () {
                 var aux = document.createElement("input");

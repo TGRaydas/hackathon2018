@@ -59,7 +59,7 @@
             </div>
 
             <div class="col-sm-6">
-                <button class="btn btn-primary float-right btn-sm" id="copy_button" onclick="copyToClipboard('resultContainer')"><i class="fas fa-copy"></i> Copy</button>
+                <button class="btn btn-primary float-right btn-sm" id="copy_button" ><i class="fas fa-copy"></i> Copy</button>
                 <br>
                 <br>
                 <textarea readonly class="form-control" id="resultContainer" style="resize: none" rows="5">{{ hashtag_str }}</textarea>
@@ -131,14 +131,7 @@
             $("#resultContainer").val(data);
         }
 
-         function copyToClipboard(elementId) {
-             var aux = document.createElement("input");
-             aux.setAttribute("value", document.getElementById(elementId).innerHTML);
-             document.body.appendChild(aux);
-             aux.select();
-             document.execCommand("copy");
-             document.body.removeChild(aux);
-            }
+
 
         $(document).ready(function () {
             $("#upload_url").click(function () {
@@ -151,7 +144,6 @@
                 $('#upload_form').submit();
                 getBase64();
             });
-
         });
 
         $(function () {
@@ -166,6 +158,14 @@
 
         function imageIsLoaded(e) {
             $('#image_space').attr('src', e.target.result);
-        };
+        }
+
+        $("#copy_button").click(function () {
+                var aux = document.createElement("input");
+                aux.setAttribute("value", $("#resultContainer").val());
+                document.body.appendChild(aux);
+                aux.select();
+                document.execCommand("copy");
+            });
     </script>
 </html>

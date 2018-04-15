@@ -85,7 +85,7 @@
 
                 <br>
 
-                <div class="row" align="center">
+                <div hidden class="row" align="center">
                     <div class="col-lg-2">
 
                     </div>
@@ -98,12 +98,12 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div hidden class="row">
                     <div class="col-lg-2">
 
                     </div>
                     <div class="col-lg-8">
-                        <button class="btn btn-outline-secondary btn-block" id="take_photo_button"><i class="fas fa-camera"></i> Take a Photo</button>
+                        <button class="btn btn-outline-secondary btn-block" disabled id="take_photo_button"><i class="fas fa-camera"></i> Take a Photo </button>
                     </div><!-- /.col-lg-6 -->
 
                     <div class="col-lg-2">
@@ -218,7 +218,7 @@
         }
 
         function ClarifaiApp(url) {
-            const app = new Clarifai.App({apiKey: 'c0075192603f40fdbc1b0165585bb210'});
+            const app = new Clarifai.App({apiKey: 'd1d13637c0264148b1b9af66bc0498a4'});
             app.models.predict(Clarifai.GENERAL_MODEL, url).then(
                 function (response) {
                     // do something with response
@@ -231,7 +231,7 @@
         }
 
         function ClarifaiApp_Uploaded(base64) {
-            const app = new Clarifai.App({apiKey: 'c0075192603f40fdbc1b0165585bb210'});
+            const app = new Clarifai.App({apiKey: 'd1d13637c0264148b1b9af66bc0498a4'});
             app.models.predict(Clarifai.GENERAL_MODEL, {base64: base64}).then(
               function(response) {
                 // do something with response

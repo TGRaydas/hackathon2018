@@ -104,7 +104,7 @@
                     <button class="btn btn-outline-light text-dark float-left btn-sm" id="comment_button" style="align-items: stretch" > <i class="far fa-comment fa-2x"></i></button><br><br>
 
                     <textarea class="form-control" id="resultContainer" style="resize: none" rows="5">Your #hashtags await...</textarea><br>
-                    <button class="btn btn-outline-secondary float-right">Share on Facebook <i class="fab fa-facebook"></i></button><br>
+                    <button hidden id="the_share_button" class="btn btn-outline-secondary float-right">Share on Facebook <i class="fab fa-facebook"></i></button><br>
                     <br>
                     <br>
                 </div>
@@ -112,6 +112,8 @@
 
                 </div>
             </div>
+<meta name="description"
+      content="John Smith claims beautiful football ..." />
         <br>
         <br>
         <br>
@@ -119,6 +121,7 @@
         <br>
         </div>
     </div>
+    <div id="fb-root"></div>
     </body>
 
     <script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-latest.js"></script>
@@ -141,7 +144,7 @@
             app.models.predict(Clarifai.GENERAL_MODEL, url).then(
                 function (response) {
                     // do something with response
-                    parse_json(response)
+                    parse_json(response);
                 },
                 function (err) {
                     alert("Image could not be analyzed.")
@@ -154,7 +157,6 @@
             app.models.predict(Clarifai.GENERAL_MODEL, {base64: base64}).then(
               function(response) {
                 // do something with response
-                  console.log(response);
                   parse_json(response);
               },
               function(err) {
@@ -163,7 +165,9 @@
               }
             );
         }
-
+        function fbshareCurrentPage(url)
+        {
+            window.open("https://www.facebook.com/sharer/sharer.php?u="+ url +"&t="+document.title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'); return false; }
         function clear_url_input() {
             document.getElementById("url").value = '';
         }
@@ -189,13 +193,18 @@
 
 
         $(document).ready(function () {
+            $("#the_share_button").click(function () {
+                fbshareCurrentPage($("#image_space").attr("src"));
+            });
             $("#upload_url").click(function () {
                 var url = $("#url").val();
                 ClarifaiApp(url);
                 $("#image_space").attr("src", url);
+                $("#the_share_button").attr("hidden", false);
                 clear_url_input();
             });
-            $("#file_upload").change(function () {
+            $("#file_upload").change(function (){
+                $("#the_share_button").attr("hidden", true);
                 $('#upload_form').submit();
                 getBase64();
             });

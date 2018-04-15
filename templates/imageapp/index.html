@@ -133,11 +133,7 @@
                     <button class="btn btn-outline-light text-dark float-left btn-sm" id="heart_button" style="align-items: stretch" > <i class="far fa-heart fa-2x"></i></button>
                     <button class="btn btn-outline-light text-dark float-left btn-sm" id="comment_button" style="align-items: stretch" > <i class="far fa-comment fa-2x"></i></button><br><br>
                     <textarea class="form-control" id="resultContainer" style="resize: none" rows="5">Your #hashtags await...</textarea><br>
-<<<<<<< HEAD
                     <button hidden id="the_share_button" class="btn btn-outline-secondary float-right">Share on Facebook <i class="fab fa-facebook"></i></button><br>
-=======
-                    <button hidden class="btn btn-outline-secondary float-right" id="share_button">Share on Facebook <i class="fab fa-facebook"></i></button><br>
->>>>>>> 9f551e55e33f66a5cd0831ad8057ffb1f159f80f
                     <br>
                     <br>
                 </div>
@@ -320,7 +316,7 @@
             $("#upload_url").click(function () {
                 const img = document.querySelector('#image_space');
                 const take_button = document.querySelector('#cheese_button');
-                const share_button = document.querySelector('#share_button');
+                const share_button = document.querySelector('#the_share_button');
                 constraints['video'] = false;
                 video.hidden = true;
                 img.hidden = false;
@@ -337,7 +333,7 @@
                 $("#the_share_button").attr("hidden", true);
                 const img = document.querySelector('#image_space');
                 const take_button = document.querySelector('#cheese_button');
-                const share_button = document.querySelector('#share_button');
+                const share_button = document.querySelector('#the_share_button');
                 constraints['video'] = false;
                 video.hidden = true;
                 img.hidden = false;
@@ -368,7 +364,7 @@
             video.hidden = false;
             const img = document.querySelector('#image_space');
             const take_button = document.querySelector('#cheese_button');
-            const share_button = document.querySelector('#share_button');
+            const share_button = document.querySelector('#the_share_button');
             img.hidden = true;
             take_button.hidden = false;
             share_button.hidden = true;

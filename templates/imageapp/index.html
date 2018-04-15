@@ -121,10 +121,12 @@
             var data = "";
             var hashtags = [];
             var relevant_data = response["outputs"][0]["data"]["concepts"];
-            for (var i = 0; i < relevant_data.length; i++){
-                var splited_data = relevant_data[i]['name'].split(" ");
-                for (var x = 0; x < splited_data.length; x++) {
-                    if($.inArray(splited_data[x], hashtags) === -1) hashtags.push(splited_data[x]);
+            for (var i = 0; i < relevant_data.length; i++) {
+                if (relevant_data[i]['name'] != 'no person' && relevant_data[i]['name'] != 'mammal'){
+                    var splited_data = relevant_data[i]['name'].split(" ");
+                    for (var x = 0; x < splited_data.length; x++) {
+                        if ($.inArray(splited_data[x], hashtags) === -1) hashtags.push(splited_data[x]);
+                    }
                 }
             }
             for(var j = 0; j < hashtags.length; j++) {

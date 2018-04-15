@@ -9,63 +9,106 @@
         <title>Hashtagger</title>
     </head>
 
-    <body>
+    <div>
     <nav class="navbar navbar-light bg-light">
         <div class="container">
             <span class="navbar-brand mb-0 h1" style="font-family: 'Rock Salt'"><i class="fab fa-slack-hash"></i> Hashtagger</span>
         </div>
     </nav>
     <div class="container">
-    <br>
-        <div align="center">
-            <h1 style="font-family: 'Rock Salt'"><i class="fas fa-hashtag"></i>hashtagger</h1>
-        </div>
-
-        <br>
-
         <div>
-            <div class="row">
-                <div class="col-sm-7">
-                    <input type="url" class="form-control" id="url">
-                </div>
-                <div class="col-sm-1">
-                    <button class="btn btn-success" id="upload_url">Upload URL</button>
-                </div>
-                <div class="col-sm-1">
-
-                </div>
-
-                <div class="col-sm-3">
-                    {% block content %}
-                      <div method="post" enctype="multipart/form-data" id="upload_form">
-                        {% csrf_token %}
-                        <label class="btn btn-success btn-block">
-                            Upload Photo <input type="file" name="myfile" id="file_upload" value="Go" hidden >
-                        </label>
-                      </div>
-
-                      {% if uploaded_file_url %}
-                        <img src="{{ uploaded_file_url }}">{{ uploaded_file_url }} />
-                      {% endif %}
-
-                    {% endblock %}
-                </div>
-            </div>
-        </div>
-
         <br>
-
-        <div class="row">
-            <div class="col-sm-6">
-                <img src="https://img00.deviantart.net/7b50/i/2009/278/c/e/generic_glowy_wallpaper_by_dividedbyzero.jpg" class="img-fluid img-thumbnail" id="image_space">
+            <div align="center">
+                <h1 style="font-family: 'Rock Salt'"><i class="fas fa-hashtag"></i>hashtagger</h1>
             </div>
 
-            <div class="col-sm-6">
-                <button class="btn btn-primary float-right btn-sm" id="copy_button" ><i class="fas fa-copy"></i> Copy</button>
+            <br>
+
+            <div>
+                <div class="row">
+                    <div class="col-lg-2">
+
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="url" placeholder="Search for...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-outline-secondary" type="button" id="upload_url"><i class="fas fa-link"></i> Upload URL</button>
+                          </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+
+                    <div class="col-lg-2">
+
+                    </div>
+                </div>
+
                 <br>
-                <br>
-                <textarea readonly class="form-control" id="resultContainer" style="resize: none" rows="5">Your #hashtags await...</textarea>
+
+                <div class="row" align="center">
+                    <div class="col-lg-2">
+
+                    </div>
+                    <div class="col-lg-8">
+                        <p style="font-family: 'Rock Salt'">Or</p>
+                    </div><!-- /.col-lg-6 -->
+
+                    <div class="col-lg-2">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-2">
+
+                    </div>
+                    <div class="col-lg-8">
+                        {% block content %}
+                          <div method="post" enctype="multipart/form-data" id="upload_form">
+                            {% csrf_token %}
+                            <label class="btn btn-outline-secondary btn-block">
+                                <i class="fas fa-upload"></i> Upload Photo <input type="file" name="myfile" id="file_upload" value="Go" hidden >
+                            </label>
+                          </div>
+
+                          {% if uploaded_file_url %}
+                            <img src="{{ uploaded_file_url }}">{{ uploaded_file_url }} />
+                          {% endif %}
+
+                        {% endblock %}
+                    </div><!-- /.col-lg-6 -->
+
+                    <div class="col-lg-2">
+
+                    </div>
+                </div>
+
+
+                </div>
             </div>
+
+            <br>
+            <br>
+            <br>
+
+            <div class="row">
+                <div class="col-lg-2">
+
+                </div>
+                <div class="col-lg-8" align="center">
+                    <img src="http://as01.epimg.net/betech/imagenes/2018/02/09/portada/1518174127_863459_1518174213_noticia_normal.jpg" class="img-fluid img-thumbnail" id="image_space">
+                    <button class="btn btn-outline-light text-dark float-right btn-sm" id="copy_button" style="align-items: stretch" >Copy <i class="fas fa-copy"></i></button>
+                    <textarea readonly class="form-control" id="resultContainer" style="resize: none" rows="5">Your #hashtags await...</textarea>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         </div>
     </div>
     </body>
@@ -168,6 +211,7 @@
                 document.body.appendChild(aux);
                 aux.select();
                 document.execCommand("copy");
+                document.body.removeChild(aux);
             });
     </script>
 </html>

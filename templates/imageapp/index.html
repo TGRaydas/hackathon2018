@@ -32,18 +32,17 @@
                 <div class="col-sm-1">
 
                 </div>
-                <div class="col-sm-5">
+                <div class="col-sm-3">
                     {% block content %}
-                      <div method="post" enctype="multipart/form-data" id="upload_form">
+                      <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <label class="btn btn-success">
-                            Upload Photo <input type="file" name="myfile" id="file_upload" value="Go" hidden >
-                        </label>
-                      </div>
+                        <input type="file" name="myfile">
+                        <button type="submit">Upload</button>
+                      </form>
 
                       {% if uploaded_file_url %}
                         <img src="{{ uploaded_file_url }}">{{ uploaded_file_url }} />
-                        <p>{{ uploaded_file_url }}</p>
+
                       {% endif %}
 
                     {% endblock %}

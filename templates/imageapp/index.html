@@ -67,7 +67,7 @@
                           <div method="post" enctype="multipart/form-data" id="upload_form">
                             {% csrf_token %}
                             <label class="btn btn-outline-secondary btn-block">
-                                <i class="fas fa-upload"></i> Upload Photo <input type="file" name="myfile" id="file_upload" value="Go" hidden >
+                                <i class="fas fa-upload"></i> Upload a Photo <input type="file" name="myfile" id="file_upload" value="Go" hidden >
                             </label>
                           </div>
 
@@ -98,9 +98,14 @@
                     <br>
                     <h3 class="float-left" style="font-size: 32px; vertical-align: top;"><i class="fab fa-instagram"></i> nice_pic</h3>
                     <br>
-                    <img src="https://instagram-press.com/wp-content/uploads/2017/05/instagram-face-filters.png" style="width: 720px" class="img-thumbnail" id="image_space">
-                    <button class="btn btn-outline-light text-dark float-right btn-sm" id="copy_button" style="align-items: stretch" >Copy <i class="fas fa-copy"></i></button>
-                    <textarea readonly class="form-control" id="resultContainer" style="resize: none" rows="5">Your #hashtags await...</textarea>
+                    <img src="https://instagram-press.com/wp-content/uploads/2017/05/instagram-face-filters.png" style="width: 720px" class="img-thumbnail" id="image_space"><br><br>
+                    <button class="btn btn-outline-light text-dark float-right btn-sm" id="copy_button" style="align-items: stretch" > <i class="far fa-copy fa-2x"></i></button>
+                    <button class="btn btn-outline-light text-dark float-left btn-sm" id="heart_button" style="align-items: stretch" > <i class="far fa-heart fa-2x"></i></button>
+                    <button class="btn btn-outline-light text-dark float-left btn-sm" id="comment_button" style="align-items: stretch" > <i class="far fa-comment fa-2x"></i></button><br><br>
+
+                    <textarea class="form-control" id="resultContainer" style="resize: none" rows="5">Your #hashtags await...</textarea><br>
+                    <button class="btn btn-outline-secondary float-right">Share on Facebook <i class="fab fa-facebook"></i></button><br>
+                    <br>
                     <br>
                 </div>
                 <div class="col-lg-2">

@@ -7,6 +7,7 @@
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">        <title>Hashtag Finder</title>
     </head>
+
     <body>
     <nav class="navbar navbar-light bg-light">
         <div class="container">
@@ -45,36 +46,63 @@
             </div>
 
             <div class="col-sm-6">
-                <button class="btn btn-primary float-right btn-sm" id="copy_button"><i class="fas fa-copy"></i> Copy</button>
+                <button class="btn btn-primary float-right btn-sm" id="copy_button" onclick="copyToClipboard('resultContainer')"><i class="fas fa-copy"></i> Copy</button>
                 <br>
                 <br>
                 <textarea readonly class="form-control" id="resultContainer" style="resize: none" rows="5">{{ hashtag_str }}</textarea>
             </div>
         </div>
     </div>
-
     </body>
-<script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-latest.js"></script>
-<script>
-function ClarifaiApp(url) {
-    const app = new Clarifai.App({apiKey: 'f64b527474474958a7949d4575980d93'});
-    app.models.predict(Clarifai.GENERAL_MODEL, url).then(
-        function (response) {
-            // do something with response
-            console.log(response)
-        },
-        function (err) {
-            // there was an error
+
+    <script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-latest.js"></script>
+    <script>
+        function ClarifaiApp(url) {
+            const app = new Clarifai.App({apiKey: 'f64b527474474958a7949d4575980d93'});
+            app.models.predict(Clarifai.GENERAL_MODEL, url).then(
+                function (response) {
+                    // do something with response
+                    parse_json(response, url)
+                },
+                function (err) {
+                    // there was an error
+                }
+            );
         }
-    );
-}
-$(document).ready(function () {
-    $("#upload_url").click(function () {
-        var url = $("#url").val();
-        ClarifaiApp(url);
-    })
 
-});
+        function clear_url_input() {
+            document.getElementById("url").value = '';
+        }
 
-</script>
+        function parse_json(response, url){
+            var data = "";
+            var relevant_data = response["outputs"][0]["data"]["concepts"];
+            for (var i = 0; i < relevant_data.length; i++){
+                var splited_data = relevant_data[i]['name'].split(" ");
+                for (var x = 0; x < splited_data.length; x++) {
+                    data += "#" + splited_data[x] + " ";
+                }
+            }
+            $("#resultContainer").val(data);
+            $("#image_space").attr("src", url);
+        }
+
+         function copyToClipboard(elementId) {
+             var aux = document.createElement("input");
+             aux.setAttribute("value", document.getElementById(elementId).innerHTML);
+             document.body.appendChild(aux);
+             aux.select();
+             document.execCommand("copy");
+             document.body.removeChild(aux);
+            }
+
+        $(document).ready(function () {
+            $("#upload_url").click(function () {
+                var url = $("#url").val();
+                ClarifaiApp(url);
+                clear_url_input();
+            })
+
+        });
+    </script>
 </html>

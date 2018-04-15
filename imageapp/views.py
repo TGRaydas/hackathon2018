@@ -43,6 +43,7 @@ def index(request):
             return HttpResponse('image upload success')
     return HttpResponseForbidden('allowed only via POST')'''
 
+
 def hashtag_creator(clarifai_response):
     hashtag_dict_list = clarifai_response['outputs'][0]['data']['concepts']
     hashtag_list = list()

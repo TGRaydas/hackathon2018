@@ -10,7 +10,7 @@ from django.http import HttpResponse
 
 def index(request):
 
-    app = ClarifaiApp(api_key='ad52e2db6c624f22a1ac20ffc11f05ed')
+    app = ClarifaiApp(api_key='bd0ca4ef75ce47b69440287a4ded11dd')
 
     model = app.models.get('general-v1.3')
     # image = ClImage(url='https://samples.clarifai.com/metro-north.jpg')

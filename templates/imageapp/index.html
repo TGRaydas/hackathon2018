@@ -58,14 +58,14 @@
     <script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-latest.js"></script>
     <script>
         function ClarifaiApp(url) {
-            const app = new Clarifai.App({apiKey: 'f64b527474474958a7949d4575980d93'});
+            const app = new Clarifai.App({apiKey: 'bd0ca4ef75ce47b69440287a4ded11dd'});
             app.models.predict(Clarifai.GENERAL_MODEL, url).then(
                 function (response) {
                     // do something with response
                     parse_json(response, url)
                 },
                 function (err) {
-                    // there was an error
+                    alert("Image could not be analyzed.")
                 }
             );
         }
@@ -76,12 +76,16 @@
 
         function parse_json(response, url){
             var data = "";
+            var hashtags = [];
             var relevant_data = response["outputs"][0]["data"]["concepts"];
             for (var i = 0; i < relevant_data.length; i++){
                 var splited_data = relevant_data[i]['name'].split(" ");
                 for (var x = 0; x < splited_data.length; x++) {
-                    data += "#" + splited_data[x] + " ";
+                    if($.inArray(splited_data[x], hashtags) === -1) hashtags.push(splited_data[x]);
                 }
+            }
+            for(var j = 0; j < hashtags.length; j++) {
+                data += "#" + hashtags[j] + " ";
             }
             $("#resultContainer").val(data);
             $("#image_space").attr("src", url);
